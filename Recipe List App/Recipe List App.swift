@@ -11,7 +11,8 @@ import SwiftUI
 struct Recipe_List_AppApp: App {
     var body: some Scene {
         WindowGroup {
-            RecipeListView()
+            //starting point of app / this is first screen that is shown when app starts
+            RecipeTabView()
         }
     }
 }

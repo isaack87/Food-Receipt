@@ -11,18 +11,43 @@ struct RecipeDetailView: View {
     
     var recipe:Recipe
     
+    @State var selectedServingSize = 6
+    
     var body: some View {
         ScrollView {
             VStack (alignment: .leading) {
+                
                 // MARK: IMages
                 Image(recipe.image)
                     .resizable().scaledToFit()
                 VStack(alignment: .leading) {
+                    
+                // MARK: Recipe Title
+                    
+                    Text(recipe.name)
+                        .bold()
+                        .padding(.top, 20)
+                        .padding(.leading)
+                        .font(.largeTitle)
+                    
+                // MARK: Serving Size Picker
+                    VStack(alignment: .leading) {
+                        Text("Select your serving size")
+                        Picker( "", selection: $selectedServingSize) {
+                              Text("2").tag(2)
+                              Text("4").tag(4)
+                              Text("6").tag(6)
+                              Text("8").tag(8)
+                        }.pickerStyle(SegmentedPickerStyle())
+                            .frame(width:160)
+                    }
+
 
                 // MARK: ingrediants
                     Text("Ingredients").font(.headline).padding(.bottom, 10)
-                    ForEach (recipe.ingredients, id: \.self) { r in
-                        Text("•" + r).padding(.bottom, 1)
+                    ForEach (recipe.ingredients) { r in
+                        // we have access to RecipeMOdel because we passed it in as a enviroment in tabview
+                        Text("•" + RecipeModel.getPortion(ingredient: r, recipeServings: recipe.servings, targetServings: selectedServingSize) + " " + r.name.lowercased()).padding(.bottom, 1)
                     }
                 }.padding(.horizontal)
                 // MARK: instructions
@@ -35,7 +60,6 @@ struct RecipeDetailView: View {
                     }
                 }.padding(.horizontal)
             }
-            .navigationBarTitle(recipe.name)
         }
     }
 }

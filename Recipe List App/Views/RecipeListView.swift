@@ -8,29 +8,46 @@
 import SwiftUI
 
 struct RecipeListView: View {
-    
-    // referance the view model
-    @ObservedObject var model = RecipeModel()
+
+    @EnvironmentObject var model:RecipeModel
     
     var body: some View {
 
             NavigationView {
-            List(model.recipes) { r in
-                
-                NavigationLink(
-                destination: RecipeDetailView(recipe: r),
-                label: {
-                    HStack(spacing: 20.0) {
-                        Image(r.image)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 50, height: 50, alignment: .center)
-                            .clipped()
-                            .cornerRadius(5)
-                        Text(r.name)
+                VStack(alignment: .leading) {
+                    Text("All Recipes")
+                        .bold()
+                        .padding(.top, 40)
+                        .font(.largeTitle)
+                    ScrollView {
+                        //lazy stack only builds what we need as needed great for scrolling and not creating items yet not scrolled too saves memory
+                        LazyVStack(alignment: .leading) {
+                            ForEach(model.recipes) { r in
+                                NavigationLink(
+                                destination: RecipeDetailView(recipe: r),
+                                label: {
+                                    HStack(spacing: 20.0) {
+                                        Image(r.image)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 50, height: 50, alignment: .center)
+                                            .clipped()
+                                            .cornerRadius(5)
+                                        
+                                        VStack(alignment: .leading) {
+                                            Text(r.name)
+                                                .foregroundColor(.black)
+                                            RecipeHighlights(highlights: r.highlights)
+                                                .foregroundColor(.black)
+                                        }
+                           
+                                        }
+                                    })
+                                }
                         }
-                    })
-                }.navigationBarTitle("All Recipes")
+                    }
+                }
+                .navigationBarHidden(true).padding(.leading)
             }
         }
 }
@@ -38,5 +55,6 @@ struct RecipeListView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         RecipeListView()
+            .environmentObject(RecipeModel())
     }
 }
