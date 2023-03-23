@@ -18,7 +18,8 @@ struct RecipeListView: View {
                     Text("All Recipes")
                         .bold()
                         .padding(.top, 40)
-                        .font(.largeTitle)
+                        .font(Font.custom("Avenir Heavy", size: 24))
+                    
                     ScrollView {
                         //lazy stack only builds what we need as needed great for scrolling and not creating items yet not scrolled too saves memory
                         LazyVStack(alignment: .leading) {
@@ -37,6 +38,8 @@ struct RecipeListView: View {
                                         VStack(alignment: .leading) {
                                             Text(r.name)
                                                 .foregroundColor(.black)
+                                                .font(Font.custom("Avenir Heavy", size: 16))
+                                            
                                             RecipeHighlights(highlights: r.highlights)
                                                 .foregroundColor(.black)
                                         }

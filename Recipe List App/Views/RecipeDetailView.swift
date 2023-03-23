@@ -28,7 +28,7 @@ struct RecipeDetailView: View {
                         .bold()
                         .padding(.top, 20)
                         .padding(.leading)
-                        .font(.largeTitle)
+                        .font(Font.custom("Avenir Heavy", size: 24))
                     
                 // MARK: Serving Size Picker
                     VStack(alignment: .leading) {
@@ -44,20 +44,23 @@ struct RecipeDetailView: View {
 
 
                 // MARK: ingrediants
-                    Text("Ingredients").font(.headline).padding(.bottom, 10)
+                    Text("Ingredients")
+                        .font(Font.custom("Avenir Heavy", size: 16))
                     ForEach (recipe.ingredients) { r in
                         // we have access to RecipeMOdel because we passed it in as a enviroment in tabview
                         Text("•" + RecipeModel.getPortion(ingredient: r, recipeServings: recipe.servings, targetServings: selectedServingSize) + " " + r.name.lowercased()).padding(.bottom, 1)
+                            .font(Font.custom("Avenir Heavy", size: 15))
                     }
                 }.padding(.horizontal)
                 // MARK: instructions
                 VStack(alignment: .leading) {
                     Text("Directions")
-                        .font(.headline)
+                        .font(Font.custom("Avenir Heavy", size: 16))
                         .padding([.bottom, .top], 5)
                     ForEach (0..<recipe.directions.count, id: \.self) { index in
                         Text(String(index+1) + ". " + recipe.directions[index]).padding(.bottom, 5)
                     }
+                    .font(Font.custom("Avenir Heavy", size: 15))
                 }.padding(.horizontal)
             }
         }

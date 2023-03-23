@@ -78,7 +78,7 @@ struct RecipeFeaturedView: View {
                 Text("Preparation Time:")
                     .font(Font.custom("Avenir Heavy", size: 16))
                 Text(featuredRecipes[tabSelectionIndex].prepTime)
-                    .font(Font.custom("Avenir", size: 15))
+                    .font(Font.custom("Avenir Heavy", size: 16))
                 
                 Text("Highlights")
                     .font(Font.custom("Avenir Heavy", size: 16))
